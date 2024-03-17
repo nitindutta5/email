@@ -3,6 +3,8 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 var bodyParser = require('body-parser')
 const { renderEmailTemplate } = require('./helper/emailHelper')
+const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,14 +17,14 @@ app.set('view engine', 'pug');
 app.post('/send-email/:template', async (req, res) => {
     const { template } = req.params;
     const body = req.body;
-
+    console.log(process.env.EMAIL)
     // Logic to render and send email based on the template
     try {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: 'nitindutta5@gmail.com',
-                pass: 'slhy bbbe bcii eonz',
+                user: process.env.EMAIL,
+                pass: process.env.PASS,
             },
             // Configure your email service here (SMTP settings, etc.)
         });
